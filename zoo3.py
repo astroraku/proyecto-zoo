@@ -6,7 +6,8 @@ from sklearn.naive_bayes import GaussianNB
 from sklearn.neural_network import MLPClassifier
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, confusion_matrix
-
+import numpy as np
+rando_state= np.random.randint(1, 101)
 # Cargar el dataset
 data = pd.read_csv('zoo3.csv')
 
@@ -15,7 +16,7 @@ X = data.drop(['animal_name', 'class_type'], axis=1)  # Valores de entrada
 y = data['class_type']  # Valores de salida
 
 # Dividir los datos en conjuntos de entrenamiento y prueba
-X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=rando_state)
 
 # Regresión Logística
 log_reg = LogisticRegression()
@@ -46,7 +47,7 @@ accuracy_nb = accuracy_score(y_test, y_pred_nb)
 print(f"Precisión de Naive Bayes: {accuracy_nb}")
 
 # Red Neuronal (IA)
-mlp = MLPClassifier(hidden_layer_sizes=(20, 10), max_iter=1000, random_state=20)
+mlp = MLPClassifier(hidden_layer_sizes=(20, 10), max_iter=1000, random_state=rando_state)
 mlp.fit(X_train, y_train)
 y_pred_mlp = mlp.predict(X_test)
 accuracy_mlp = accuracy_score(y_test, y_pred_mlp)
@@ -73,4 +74,6 @@ evaluate_model("K-Vecinos Cercanos", y_test, y_pred_knn)
 evaluate_model("Máquinas Vector Soporte", y_test, y_pred_svm)
 evaluate_model("Naive Bayes", y_test, y_pred_nb)
 evaluate_model("Red Neuronal", y_test, y_pred_mlp)
+
+
 
